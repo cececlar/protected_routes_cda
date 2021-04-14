@@ -17,7 +17,7 @@ class SignUp extends React.Component {
   render() {
     return (
       <div className="signup">
-        <h1>Login</h1>
+        <h1>Create Account</h1>
         <form onSubmit={this.handleSubmit}>
           <label>First Name:</label>
           <input type="text" name="first_name" />
@@ -31,7 +31,7 @@ class SignUp extends React.Component {
           <input type="text" name="address" />
           <label>Phone Number:</label>
           <input type="text" name="phone" />
-          <button>Login</button>
+          <button>Sign up!</button>
         </form>
       </div>
     );
