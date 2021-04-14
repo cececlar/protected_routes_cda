@@ -7,20 +7,11 @@ class SignUp extends React.Component {
   };
 
   handleChange = (e) => {
-    this.setState({
-      formData: { ...this.state.formData, [e.target.name]: e.target.value }
-    });
+    //grab form data and set it to state
   };
 
   handleSubmit = (e) => {
-    e.preventDefault();
-    axios
-      .post('http://localhost:8080/api/users', this.state.formData)
-      .then((res) => {
-        sessionStorage.setItem('token', res.data.token);
-        this.props.history.push('/');
-      })
-      .catch((error) => alert(error));
+    // submit it to backend to receive token
   };
 
   render() {
