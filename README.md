@@ -9,6 +9,7 @@ Learn how to create Protected routes in React where a user must be authenticated
 - `cd ..`
 - `cd server && npm i`
 - `cp .env.sample > .env`
+- In your `.env` add a value for your JWT_SECRET env variable
 
 ### Database Configuration
 - In the `server/knexfile.js`, add your configuration data.
