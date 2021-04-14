@@ -26,7 +26,7 @@ class SignUp extends React.Component {
   render() {
     return (
       <div className="signup">
-        <h1>Login</h1>
+        <h1>Create Account</h1>
         <form onSubmit={this.handleSubmit}>
           <label>First Name:</label>
           <input type="text" name="first_name" onChange={this.handleChange} />
@@ -40,7 +40,7 @@ class SignUp extends React.Component {
           <input type="text" name="address" onChange={this.handleChange} />
           <label>Phone Number:</label>
           <input type="text" name="phone" onChange={this.handleChange} />
-          <button>Login</button>
+          <button>Sign up!</button>
         </form>
       </div>
     );
