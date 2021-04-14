@@ -7,11 +7,20 @@ class SignUp extends React.Component {
   };
 
   handleChange = (e) => {
-    //grab form data and set it to state
+    this.setState({
+      formData: { ...this.state.formData, [e.target.name]: e.target.value }
+    });
   };
 
   handleSubmit = (e) => {
-    // submit it to backend to receive token
+    e.preventDefault();
+    axios
+      .post('http://localhost:8080/api/users', this.state.formData)
+      .then((res) => {
+        sessionStorage.setItem('token', res.data.token);
+        this.props.history.push('/');
+      })
+      .catch((error) => alert(error));
   };
 
   render() {
@@ -20,17 +29,17 @@ class SignUp extends React.Component {
         <h1>Login</h1>
         <form onSubmit={this.handleSubmit}>
           <label>First Name:</label>
-          <input type="text" name="first_name" />
+          <input type="text" name="first_name" onChange={this.handleChange} />
           <label>Last Name:</label>
-          <input type="text" name="last_name" />
+          <input type="text" name="last_name" onChange={this.handleChange} />
           <label>Email</label>
-          <input type="email" name="email" />
+          <input type="email" name="email" onChange={this.handleChange} />
           <label>Password</label>
-          <input type="password" name="password" />
+          <input type="password" name="password" onChange={this.handleChange} />
           <label>Address:</label>
-          <input type="text" name="address" />
+          <input type="text" name="address" onChange={this.handleChange} />
           <label>Phone Number:</label>
-          <input type="text" name="phone" />
+          <input type="text" name="phone" onChange={this.handleChange} />
           <button>Login</button>
         </form>
       </div>
