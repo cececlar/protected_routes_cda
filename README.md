@@ -8,19 +8,20 @@ Learn how to create Protected routes in React where a user must be authenticated
 - `cd client && npm i`
 - `cd ..`
 - `cd server && npm i`
-- `cp .env.sample > .env`
-- In your `.env` add a value for your JWT_SECRET env variable
+- `cp .env.sample .env`
+- In your `.env` add a value for your JWT_SECRET env variable, choose any value.
 
 ### Database Configuration
 - In the `server/knexfile.js`, add your configuration data.
 - In the terminal, type `mysql` or `mysql -u root -p` to login as root user.
 - In the mysql console, type: `CREATE DATABASE <YOUR DB NAME>`
-
+- In the mysql console, type: `exit`
+  
 ### Database Migration
 - Now that we have the database created, in the terminal cd to `server`
 - In the terminal, run `knex migrate:latest`
 
 
 ### Running Development Servers
-- For the client, `npm start` 
-- For the server, `npm run server`
+- For the client, `cd client && npm start` 
+- For the server, `cd server && npm run server`

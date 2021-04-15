@@ -2,9 +2,9 @@ module.exports = {
   client: 'mysql',
   connection: {
     host: '127.0.0.1',
-    user: '<YOUR DB USER>',
-    password: '<YOUR DB PASSWORD>',
-    database: '<YOUR DB NAME>',
+    user: 'root',
+    password: '6560256wK1!',
+    database: 'todoapp',
     charset: 'utf8'
   }
 };
