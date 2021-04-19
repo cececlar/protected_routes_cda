@@ -54,7 +54,7 @@ Learn how to create Protected routes in React where a user must be authenticated
 
 - In the server/knexfile.js, add your database configuration credentials. A sample is shown below.
 
-```
+```js
 module.exports = {
   client: "mysql",
   connection: {
@@ -85,10 +85,24 @@ module.exports = {
 - Run `heroku create <nameofyourapp>` to create a new Heroku app. Alternatively, run `heroku create` with no app name specified and be amused at Heroku's ridiculous auto-generated app names.
 - To view your beautiful (empty) app, run `heroku open` or select the app from your dashboard and click 'Open app'.
 
-#### Configure Your Production Database
+#### Configure Your Production Database, Buildpack, and Environment Variables
 
 - On the Heroku dashboard for your app, click the 'Resources' tab
 - In the 'Add-ons' section, search for 'JawsDB MySQL'
 - Leave 'Plan name' on 'Kitefin Shared - Free' and click 'Submit Order Form'
 - Expand the JawsDB MySQL add-on to view your database connection string
-- Click the 'Settings' tab on the dashboard, and scroll down to the 'Config Vars' section to ensure that a `JAWSDB_URL` variable has been added to your Heroku app.
+- Go to the 'Settings Tab' and click on the 'Reveal Config Vars' button. Make sure you have a config var entry that is pointing to the JawsDB URL.​
+- If not, you can manually add one. JAWSDB_URL & the above connection string will be the key value pair. Enter them in the text box.​
+- Go to the Buildpacks section under settings tab. Click on 'Add buildpack' and search for nodejs. Add it as your buildpack. You should see Heroku/nodejs once you have it successfully added.​
+- From the root directory of your project, in Terminal run `npm i -D dotenv`
+- In your `.env` file, add the following: `"JAWSDB_URL="127.0.0.1"`
+- In your Heroku dashboard, add a config variable called JWT_SECRET and set it as equal to anything
+- Ensure that your `server/index.js` file begins with the following:
+
+```js
+if (process.env.NODE_ENV !== "production") require("dotenv").config();
+```
+
+#### Update the React Front-End Client Application
+
+-

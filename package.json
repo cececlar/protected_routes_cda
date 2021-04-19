@@ -1,0 +1,20 @@
+{
+  "name": "protected_routes_cda",
+  "version": "1.0.0",
+  "description": "Learn how to create Protected routes in React where a user must be authenticated in order to have access to your application.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cececlar/protected_routes_cda.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cececlar/protected_routes_cda/issues"
+  },
+  "homepage": "https://github.com/cececlar/protected_routes_cda#readme"
+}
