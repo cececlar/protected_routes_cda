@@ -12,14 +12,14 @@ app.use(express.json());
 
 app.use("/api/users", userRoutes);
 
-// const connection =
-//   process.env.NODE_ENV === "production"
-//     ? mysql.createConnection(process.env.JAWSDB_URL)
-//     : mysql.createConnection(configuration.development.connection);
+if (process.env.NODE_ENV === "production") {
+  // Set static folder
+  app.use(express.static("../client/build"));
 
-// connection.connect((e) => {
-//   e ? console.log(e.message) : console.log("Connected to MySQL");
-// });
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client", "build", "index.html"));
+  });
+}
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
