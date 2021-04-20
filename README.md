@@ -10,7 +10,7 @@
 #### Fork and Configure Project
 
 - In Terminal, navigate to your Brainstation directory
-- Fork [this repo](https://github.com/cececlar/protected_routes_cda)
+- **Fork** [this repo](https://github.com/cececlar/protected_routes_cda)
 - Once you have forked the above repo, `git clone <SSH key or HTTPS URL of repo>`
 - `cd protected_routes_cda`
 - cd client && npm i
@@ -54,6 +54,8 @@ module.exports = {
 - Run `heroku create <nameofyourapp>` to create a new Heroku app. Alternatively, run `heroku create` with no app name specified and be amused at Heroku's ridiculous auto-generated app names.
 - To view your beautiful (empty) app, run `heroku open` or select the app from your dashboard and click 'Open app'.
 
+**Check for understanding: BUT WHY???**
+
 #### Configure Your Production Database, Buildpack, and Environment Variables
 
 - On the Heroku dashboard for your app, click the 'Resources' tab
@@ -64,12 +66,116 @@ module.exports = {
 - If not, you can manually add one. JAWSDB_URL & the above connection string will be the key value pair. Enter them in the text box.​
 - Go to the Buildpacks section under settings tab. Click on 'Add buildpack' and search for nodejs. Add it as your buildpack. You should see Heroku/nodejs once you have it successfully added.​
 - From the root directory of your project, in Terminal run `npm i -D dotenv`
-- In your `.env` file, add the following: `"JAWSDB_URL="127.0.0.1"`
+- In your `.env` file, add the following:
+
+```
+JWT_SECRET="anything"
+JAWSDB_URL="localhost"
+DB_USER="root"
+DB_PASSWORD="rootroot"
+DB_NAME="todoheroku"
+```
+
 - In your Heroku dashboard, add a config variable called JWT_SECRET and set it as equal to anything
+
+**Check for understanding: BUT WHY???**
+
+#### Update server/index.js
+
 - Ensure that your `server/index.js` file begins with the following:
 
 ```js
 if (process.env.NODE_ENV !== "production") require("dotenv").config();
 ```
 
+**Check for understanding: BUT WHY???**
+
+#### Update server/knexfile.js
+
+```js
+const mysql = require("mysql");
+
+exports.configuration = {
+  development: {
+    client: "mysql",
+    connection: {
+      host: process.env.JAWSDB_URL,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+      charset: "utf8",
+      insecureAuth: true,
+    },
+  },
+  production: {
+    client: "mysql",
+    connection: process.env.JAWSDB_URL,
+  },
+};
+
+const connection =
+  process.env.NODE_ENV === "production"
+    ? mysql.createConnection(process.env.JAWSDB_URL)
+    : mysql.createConnection(this.configuration.development.connection);
+
+connection.connect((e) => {
+  e ? console.log(e.message) : console.log("You're connected to MySQL!");
+});
+```
+
+**Check for understanding: BUT WHY???**
+
+#### Update server/bookshelf.js
+
+```js
+const knex =
+  process.env.NODE_ENV === "production"
+    ? require("knex")(require("./knexfile").configuration.production)
+    : require("knex")(require("./knexfile").configuration.development);
+const bookshelf = require("bookshelf")(knex);
+
+module.exports = bookshelf;
+```
+
+**Check for understanding: BUT WHY???**
+
+#### Update scripts in server/package.json
+
+- Update your `server/package.json` scripts with the following:
+
+```json
+  "scripts": {
+    "migrate": "knex migrate:latest",
+    "migrate:down": "knex migrate:down",
+    "migrate:rollback": "knex migrate:rollback",
+    "seed": "knex seed:run",
+    "start": "node index.js",
+    "server": "nodemon index.js"
+  }
+```
+
+**Check for understanding: BUT WHY???**
+
+#### Update scripts in root package.json
+
+```json
+  "scripts": {
+    "client": "npm start --prefix client",
+    "start": "npm start --prefix server",
+    "server": "nodemon index --prefix server",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm install --prefix server && npm run build --prefix client"
+  }
+```
+
+**Check for understanding: BUT WHY???**
+
 #### Update the React Front-End Client Application
+
+- Open `client/package.json` and set a proxy: `"proxy": "http://localhost:8080"`
+- Update your axios requests in your `Home.js`, `Login.js`, and `SignUp.js` components so that they making requests to the remaining portion of your API endpoint (e.g. `http://localhost:8080/api/users/current` can be changed to `/api/users/current`)
+- After making changes to `package.json`, restart your client side server to verify that your proxy is working correctly
+
+**Check for understanding: BUT WHY???**
+
+#### Update server/index.js

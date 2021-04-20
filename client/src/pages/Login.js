@@ -16,7 +16,7 @@ class Login extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8080/api/users/login", this.state.formData)
+      .post("/api/users/login", this.state.formData)
       .then((res) => {
         sessionStorage.setItem("token", res.data.token);
         this.props.history.push("/");

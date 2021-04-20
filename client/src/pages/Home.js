@@ -10,7 +10,7 @@ class Home extends React.Component {
     //make axios call to backend to get currentUser info and set it to state
     const token = sessionStorage.getItem("token");
     axios
-      .get("http://localhost:8080/api/users/current", {
+      .get("/api/users/current", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

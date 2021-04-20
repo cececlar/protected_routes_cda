@@ -4,7 +4,11 @@
   "description": "Learn how to create Protected routes in React where a user must be authenticated in order to have access to your application.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "client": "npm start --prefix client",
+    "start": "npm start --prefix server",
+    "server": "nodemon index --prefix server",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm install --prefix server && npm run build --prefix client"
   },
   "repository": {
     "type": "git",
@@ -16,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/cececlar/protected_routes_cda/issues"
   },
-  "homepage": "https://github.com/cececlar/protected_routes_cda#readme"
+  "homepage": "https://github.com/cececlar/protected_routes_cda#readme",
+  "devDependencies": {
+    "concurrently": "^6.0.2",
+    "nodemon": "^2.0.7"
+  }
 }

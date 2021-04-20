@@ -1,3 +1,4 @@
+if (process.env.NODE_ENV !== "production") require("dotenv").config();
 const mysql = require("mysql");
 
 exports.configuration = {
@@ -24,7 +25,5 @@ const connection =
     : mysql.createConnection(this.configuration.development.connection);
 
 connection.connect((e) => {
-  e
-    ? console.log(e.message)
-    : console.log(`connected as id ${connection.threadId}`);
+  e ? console.log(e.message) : console.log("Connected to MySQL");
 });
