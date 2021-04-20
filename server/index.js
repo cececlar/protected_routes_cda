@@ -3,7 +3,6 @@ const express = require("express");
 const userRoutes = require("./routes/users");
 const cors = require("cors");
 // const mysql = require("mysql");
-// const { configuration } = require("./knexfile");
 
 const app = express();
 const PORT = 8080;

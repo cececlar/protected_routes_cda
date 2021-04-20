@@ -1,7 +1,7 @@
 if (process.env.NODE_ENV !== "production") require("dotenv").config();
-const mysql = require("mysql");
+console.log(process.env.DB_NAME);
 
-exports.configuration = {
+module.exports = {
   development: {
     client: "mysql",
     connection: {
@@ -18,12 +18,3 @@ exports.configuration = {
     connection: process.env.JAWSDB_URL,
   },
 };
-
-const connection =
-  process.env.NODE_ENV === "production"
-    ? mysql.createConnection(process.env.JAWSDB_URL)
-    : mysql.createConnection(this.configuration.development.connection);
-
-connection.connect((e) => {
-  e ? console.log(e.message) : console.log("Connected to MySQL");
-});
