@@ -4,6 +4,4 @@ const knex =
     : require("knex")(require("./knexfile").development);
 const bookshelf = require("bookshelf")(knex);
 
-console.log(require("./knexfile").development);
-
 module.exports = bookshelf;
