@@ -77,25 +77,14 @@ DB_PASSWORD="rootroot"
 DB_NAME="todoheroku"
 ```
 
+- Add the additional environment variables (without their values) to your .env.sample file.
 - In your Heroku dashboard, add a config variable called JWT_SECRET and set it as equal to anything
-
-**Check for understanding: BUT WHY???**
-
-#### Update server/index.js
-
-- Ensure that your `server/index.js` file begins with the following:
-
-```js
-if (process.env.NODE_ENV !== "production") require("dotenv").config();
-```
 
 **Check for understanding: BUT WHY???**
 
 #### Update server/knexfile.js
 
 ```js
-const mysql = require("mysql");
-
 exports.configuration = {
   development: {
     client: "mysql",
@@ -113,15 +102,6 @@ exports.configuration = {
     connection: process.env.JAWSDB_URL,
   },
 };
-
-const connection =
-  process.env.NODE_ENV === "production"
-    ? mysql.createConnection(process.env.JAWSDB_URL)
-    : mysql.createConnection(this.configuration.development.connection);
-
-connection.connect((e) => {
-  e ? console.log(e.message) : console.log("You're connected to MySQL!");
-});
 ```
 
 **Check for understanding: BUT WHY???**
@@ -163,10 +143,10 @@ module.exports = bookshelf;
   "scripts": {
     "client": "npm start --prefix client",
     "start": "npm start --prefix server",
-    "server": "nodemon index --prefix server",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "npm start --prefix server NPM_CONFIG_PREFIX=./server",
+    "dev": "concurrently --kill-others \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm install --prefix server && npm run build --prefix client"
-  }
+  },
 ```
 
 **Check for understanding: BUT WHY???**
@@ -180,3 +160,33 @@ module.exports = bookshelf;
 **Check for understanding: BUT WHY???**
 
 #### Update server/index.js
+
+```js
+if (process.env.NODE_ENV !== "production") require("dotenv").config();
+const express = require("express");
+const userRoutes = require("./routes/users");
+const cors = require("cors");
+const path = require("path");
+const app = express();
+const PORT = process.env.PORT || 8080;
+
+app.use(cors());
+app.use(express.json());
+
+app.use("/api/users", userRoutes);
+
+if (process.env.NODE_ENV === "production") {
+  // Set static folder
+  app.use(express.static("../client/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client", "build", "index.html"));
+  });
+}
+
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
+});
+```
+
+**Check for understanding: BUT WHY???**
