@@ -3,8 +3,8 @@
 #### Fork and Configure Project
 
 - In Terminal, navigate to your Brainstation directory
-- **Fork** [this repo](https://github.com/cececlar/protected_routes_cda)
-- Once you have forked the above repo, `git clone <repourl>`
+- **Fork** this repo
+- Once you have forked the above repo, `git clone <clonedrepourl>`
 - `cd protected_routes_cda`
 - cd client && npm i
 - cd ..
@@ -35,7 +35,7 @@ module.exports = {
 - In the mysql console, type: `CREATE DATABASE todoheroku`
 - In the mysql console, type: exit
 
-#### Database Migration
+#### Database Migration & Seeding
 
 - Now that we have the database created, in the Terminal `cd server`
 - In Terminal, run `knex migrate:latest`
@@ -79,7 +79,39 @@ DB_NAME="todoheroku"
 ```
 
 - Add the additional environment variables (without their values) to your .env.sample file.
-- In your Heroku dashboard, add a config variable called JWT_SECRET and set it as equal to anything
+
+#### Update scripts in server/package.json
+
+- Update your `server/package.json` scripts with the following:
+
+```json
+  "scripts": {
+    "migrate": "knex migrate:latest",
+    "migrate:down": "knex migrate:down",
+    "migrate:rollback": "knex migrate:rollback",
+    "seed": "knex seed:run",
+    "start": "node index.js",
+    "server": "nodemon index.js"
+  }
+```
+
+- From your server directory, test out your npm scripts to ensure they are functional.
+
+**Check for understanding: BUT WHY???**
+
+#### Update scripts in root package.json
+
+- From the root directory, `npm i -D concurrently nodemon`
+
+```json
+  "scripts": {
+    "client": "npm start --prefix client",
+    "start": "npm start --prefix server",
+    "server": "npm start --prefix server NPM_CONFIG_PREFIX=./server",
+    "dev": "concurrently --kill-others \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm install --prefix server && npm run build --prefix client"
+  },
+```
 
 **Check for understanding: BUT WHY???**
 
