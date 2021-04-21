@@ -6,16 +6,16 @@
 - **Fork** this repo
 - Once you have forked the above repo, `git clone <clonedrepourl>`
 - `cd protected_routes_cda`
-- cd client && npm i
-- cd ..
-- cd server && npm i
-- cd ..
-- cp .env.sample .env
-- In your .env add a value for your JWT_SECRET env variable, choose any value.
+- `cd client && npm i`
+- `cd ..`
+- `cd server && npm i`
+- `cd ..`
+- `cp .env.sample .env`
+- In your `.env` file, add a value for your JWT_SECRET env variable, choose any value.
 
 #### Database Configuration
 
-- In the server/knexfile.js, ensure your database configuration contains valid values. A sample is shown below.
+- In `server/knexfile.js`, ensure your database configuration contains valid values. A sample is shown below.
 
 ```js
 module.exports = {
@@ -68,7 +68,7 @@ module.exports = {
 - If not, you can manually add one. JAWSDB_URL & the above connection string will be the key value pair. Enter them in the text box.​
 - In your Heroku configuration variables, add a config variable called JWT_SECRET and set it as equal to anything.
 - Go to the Buildpacks section under settings tab. Click on 'Add buildpack' and search for nodejs. Add it as your buildpack. You should see Heroku/nodejs once you have it successfully added.​
-- In your `server/.env` file, add the following:
+- Update your `.env` file, to the following:
 
 ```
 JWT_SECRET="anything"
@@ -78,7 +78,7 @@ DB_PASSWORD="rootroot"
 DB_NAME="todoheroku"
 ```
 
-- Add the additional environment variables (without their values) to your .env.sample file.
+- Add the additional environment variables (without their values) to your `.env.sample` file.
 
 #### Update scripts in server/package.json
 
@@ -95,19 +95,20 @@ DB_NAME="todoheroku"
   }
 ```
 
-- From your server directory, test out your npm scripts to ensure they are functional.
+- From your **server** directory, test out your npm scripts to ensure they are functional.
 
 **Check for understanding: BUT WHY???**
 
 #### Update scripts in root package.json
 
-- From the root directory, `npm i -D concurrently nodemon`
+- From the **root** directory, `npm i -D concurrently nodemon`
+- Add the following scripts to your **root** `package.json` file.
 
 ```json
   "scripts": {
     "client": "npm start --prefix client",
     "start": "npm start --prefix server",
-    "server": "npm start --prefix server NPM_CONFIG_PREFIX=./server",
+    "server": "npm start --prefix server",
     "dev": "concurrently --kill-others \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm install --prefix server && npm run build --prefix client"
   },
@@ -153,41 +154,6 @@ module.exports = bookshelf;
 
 **Check for understanding: BUT WHY???**
 
-# <<<<<<< HEAD
-
-#### Update scripts in server/package.json
-
-- Update your `server/package.json` scripts with the following:
-
-```json
-  "scripts": {
-    "migrate": "knex migrate:latest",
-    "migrate:down": "knex migrate:down",
-    "migrate:rollback": "knex migrate:rollback",
-    "seed": "knex seed:run",
-    "start": "node index.js",
-    "server": "nodemon index.js"
-  }
-```
-
-**Check for understanding: BUT WHY???**
-
-#### Update scripts in root package.json
-
-```json
-  "scripts": {
-    "client": "npm start --prefix client",
-    "start": "npm start --prefix server",
-    "server": "npm start --prefix server NPM_CONFIG_PREFIX=./server",
-    "dev": "concurrently --kill-others \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm install --prefix server && npm run build --prefix client"
-  },
-```
-
-**Check for understanding: BUT WHY???**
-
-> > > > > > > d739473aba4b633d24536b3b5672f62c608de974
-
 #### Update the React Front-End Client Application
 
 - Open `client/package.json` and set a proxy: `"proxy": "http://localhost:8080"`
@@ -196,7 +162,7 @@ module.exports = bookshelf;
 
 **Check for understanding: BUT WHY???**
 
-#### Update server/index.js
+#### Update server/index.js to include the following
 
 ```js
 if (process.env.NODE_ENV !== "production") require("dotenv").config();
