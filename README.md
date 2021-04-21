@@ -88,7 +88,7 @@ module.exports = {
   }
 ```
 
-- From your **server** directory, test out your npm scripts to ensure they are functional.
+- Test out your npm scripts in your root and server directories to ensure they are functional. 
 
 **Check for understanding: BUT WHY???** 
 
@@ -101,8 +101,8 @@ module.exports = {
 - Go to the 'Settings Tab' and click on the 'Reveal Config Vars' button. Make sure you have a config var entry that is pointing to the JawsDB URL.​
 - If not, you can manually add one. JAWSDB_URL & the above connection string will be the key value pair. Enter them in the text box.​
 - In your Heroku configuration variables, add a config variable called JWT_SECRET and set it as equal to anything.
-- Go to the Buildpacks section under settings tab. Click on 'Add buildpack' and search for nodejs. Add it as your buildpack. You should see Heroku/nodejs once you have it successfully added.​
-- Update your `.env` file, to the following:
+- Go to the Buildpacks section under settings tab. Click on 'Add buildpack' and search for nodejs. Add it as your buildpack. You should see Heroku/nodejs once you have it successfully added.
+- Update your `.env` file to the following:
 
 ```
 JWT_SECRET="anything"
@@ -119,7 +119,11 @@ DB_NAME="todoheroku"
 #### Update server/knexfile.js
 
 ```js
-exports.configuration = {
+if (process.env.NODE_ENV !== "production") require("dotenv").config();
+
+if (process.env.NODE_ENV !== "production") require("dotenv").config();
+
+module.exports = {
   development: {
     client: "mysql",
     connection: {
@@ -136,6 +140,7 @@ exports.configuration = {
     connection: process.env.JAWSDB_URL,
   },
 };
+
 ```
 
 **Check for understanding: BUT WHY???**
@@ -145,11 +150,12 @@ exports.configuration = {
 ```js
 const knex =
   process.env.NODE_ENV === "production"
-    ? require("knex")(require("./knexfile").configuration.production)
-    : require("knex")(require("./knexfile").configuration.development);
+    ? require("knex")(require("./knexfile").production)
+    : require("knex")(require("./knexfile").development);
 const bookshelf = require("bookshelf")(knex);
 
 module.exports = bookshelf;
+
 ```
 
 **Check for understanding: BUT WHY???**
@@ -170,6 +176,7 @@ const express = require("express");
 const userRoutes = require("./routes/users");
 const cors = require("cors");
 const path = require("path");
+const mysql = require("mysql");
 const app = express();
 const PORT = process.env.PORT || 8080;
 
@@ -193,3 +200,19 @@ app.listen(PORT, () => {
 ```
 
 **Check for understanding: BUT WHY???**
+
+#### Pushing to GitHub and Deploying to Heroku 
+
+- `npm run dev` to verify that your project is functioning as expected locally 
+- `git add .`
+- `git commit -m "prepare for deployment to heroku"`
+- `git push origin main` or `git push -u origin main` (the latter if it's your first time pushing to this branch)
+- `git push heroku main` to push your changes to your Heroku app 
+- `heroku logs` to view any output from pushing to Heroku 
+- **READ YOUR HEROKU LOGS IF SOMETHING HAS GONE WRONG WITH YOUR BUILD!!! ACTUALLY JUST READ YOUR HEROKU LOGS EVEN IF EVERYTHING IS SUCCESSFUL!!! THERE IS GOOD STUFF IN THERE!!!** *bangs on the table*
+- Before you open your app, click on more dropdowns and click on 'Run Console' and type bash to open a bash terminal.
+- This is where you can run your migration and seed commands for your Heroku project (so far we have only migrated and seeded locally).
+- From the Heroku terminal, `cd server`
+- `npm run migrate`
+- `npm run seed`
+- If everything goes well, you can open your app using the URL or by going to the app on the Heroku webpage and clicking the 'Open App' button.
