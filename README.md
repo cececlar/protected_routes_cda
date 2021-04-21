@@ -11,7 +11,7 @@
 
 - In Terminal, navigate to your Brainstation directory
 - **Fork** [this repo](https://github.com/cececlar/protected_routes_cda)
-- Once you have forked the above repo, `git clone <SSH key or HTTPS URL of repo>`
+- Once you have forked the above repo, `git clone <repourl>`
 - `cd protected_routes_cda`
 - cd client && npm i
 - cd ..
