@@ -51,7 +51,7 @@ module.exports = {
 
 - In Terminal, run `git remote -v` to verify that your local git repo is connected to your GitHub repo
 - To push changes to your project to Heroku, you will need a remote that points to your Heroku project, in addition to the `origin` remote. 
-- To create this new remote, in Terminal run `heroku git:remote -a thawing-inlet-61413`
+- To create this new remote, in Terminal run `heroku git:remote -a <nameofyourherokuapp>`
 - Run `git remote -v` in Terminal again. **What do you see?**
 - Now, we have the ability to push changes to our Heroku project after we have pushed them up to our GitHub repo. 
 - At the **root** of this project directory, run `npm init -y`. This will generate a `package.json` file at the **root** of your project.
