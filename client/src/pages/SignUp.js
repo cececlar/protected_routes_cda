@@ -15,7 +15,7 @@ class SignUp extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8080/api/users", this.state.formData)
+      .post("/api/users", this.state.formData)
       .then((res) => {
         sessionStorage.setItem("token", res.data.token);
         this.props.history.push("/");

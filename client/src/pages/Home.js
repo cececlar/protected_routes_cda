@@ -1,19 +1,19 @@
-import React from 'react';
-import axios from 'axios';
+import React from "react";
+import axios from "axios";
 
 class Home extends React.Component {
   state = {
-    currentUser: null
+    currentUser: null,
   };
 
   componentDidMount() {
     //make axios call to backend to get currentUser info and set it to state
-    const token = sessionStorage.getItem('token');
+    const token = sessionStorage.getItem("token");
     axios
-      .get('http://localhost:8080/api/users/current', {
+      .get("/api/users/current", {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       })
       .then((res) => this.setState({ currentUser: res.data }));
   }
@@ -22,7 +22,7 @@ class Home extends React.Component {
     return (
       <div>
         <h1>
-          Welcome Back {this.state.currentUser?.first_name}{' '}
+          Welcome Back {this.state.currentUser?.first_name}{" "}
           {this.state.currentUser?.last_name}
         </h1>
       </div>

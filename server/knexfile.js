@@ -1,10 +1,17 @@
-module.exports = {
-  client: "mysql",
-  connection: {
-    host: "127.0.0.1",
-    user: "root",
-    password: "rootroot",
-    database: "todoheroku",
-    charset: "utf8",
+exports.configuration = {
+  development: {
+    client: "mysql",
+    connection: {
+      host: process.env.JAWSDB_URL,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+      charset: "utf8",
+      insecureAuth: true,
+    },
+  },
+  production: {
+    client: "mysql",
+    connection: process.env.JAWSDB_URL,
   },
 };

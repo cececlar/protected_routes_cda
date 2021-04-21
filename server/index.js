@@ -1,16 +1,24 @@
 if (process.env.NODE_ENV !== "production") require("dotenv").config();
 const express = require("express");
 const userRoutes = require("./routes/users");
-const taskRoutes = require("./routes/tasks");
 const cors = require("cors");
-
+const path = require("path");
 const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
 app.use(cors());
 app.use(express.json());
 
 app.use("/api/users", userRoutes);
+
+if (process.env.NODE_ENV === "production") {
+  // Set static folder
+  app.use(express.static("../client/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client", "build", "index.html"));
+  });
+}
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
