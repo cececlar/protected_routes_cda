@@ -4,7 +4,7 @@
 
 - In Terminal, navigate to your Brainstation directory
 - **Fork** this repo
-- Once you have forked the above repo, `git clone <repourl>`
+- Once you have forked the above repo, `git clone <clonedrepourl>`
 - `cd protected_routes_cda`
 - cd client && npm i
 - cd ..
@@ -34,7 +34,7 @@ module.exports = {
 - In the mysql console, type: `CREATE DATABASE todoheroku`
 - In the mysql console, type: exit
 
-#### Database Migration
+#### Database Migration & Seeding 
 
 - Now that we have the database created, in the Terminal `cd server`
 - In Terminal, run `knex migrate:latest`
@@ -93,6 +93,8 @@ DB_NAME="todoheroku"
     "server": "nodemon index.js"
   }
 ```
+
+- From your server directory, test out your npm scripts to ensure they are functional.
 
 **Check for understanding: BUT WHY???**
 
