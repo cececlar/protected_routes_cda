@@ -176,9 +176,10 @@ const express = require("express");
 const userRoutes = require("./routes/users");
 const cors = require("cors");
 const path = require("path");
-const mysql = require("mysql");
 const app = express();
+const mysql = require("mysql");
 const PORT = process.env.PORT || 8080;
+let knex = require("./knexfile");
 
 app.use(cors());
 app.use(express.json());
@@ -194,9 +195,22 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+let connection;
+// make connection
+if (process.env.NODE_ENV === "production") {
+  connection = mysql.createConnection(process.env.JAWSDB_URL);
+} else {
+  connection = mysql.createConnection(knex.development);
+}
+
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
+
+connection.connect((err) => {
+  console.log("Connected to MySQL");
+});
+
 ```
 
 **Check for understanding: BUT WHY???**
