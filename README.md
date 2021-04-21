@@ -9,6 +9,7 @@
 - cd client && npm i
 - cd ..
 - cd server && npm i
+- cd ..
 - cp .env.sample .env
 - In your .env add a value for your JWT_SECRET env variable, choose any value.
 
@@ -67,7 +68,7 @@ module.exports = {
 - If not, you can manually add one. JAWSDB_URL & the above connection string will be the key value pair. Enter them in the text box.​
 - In your Heroku configuration variables, add a config variable called JWT_SECRET and set it as equal to anything.
 - Go to the Buildpacks section under settings tab. Click on 'Add buildpack' and search for nodejs. Add it as your buildpack. You should see Heroku/nodejs once you have it successfully added.​
-- In your `.env` file, add the following:
+- In your `server/.env` file, add the following:
 
 ```
 JWT_SECRET="anything"
@@ -78,37 +79,7 @@ DB_NAME="todoheroku"
 ```
 
 - Add the additional environment variables (without their values) to your .env.sample file.
-
-#### Update scripts in server/package.json
-
-- Update your `server/package.json` scripts with the following:
-
-```json
-  "scripts": {
-    "migrate": "knex migrate:latest",
-    "migrate:down": "knex migrate:down",
-    "migrate:rollback": "knex migrate:rollback",
-    "seed": "knex seed:run",
-    "start": "node index.js",
-    "server": "nodemon index.js"
-  }
-```
-
-**Check for understanding: BUT WHY???**
-
-#### Update scripts in root package.json
-
-- From the root directory, `npm i -D concurrently nodemon`
-
-```json
-  "scripts": {
-    "client": "npm start --prefix client",
-    "start": "npm start --prefix server",
-    "server": "npm start --prefix server NPM_CONFIG_PREFIX=./server",
-    "dev": "concurrently --kill-others \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm install --prefix server && npm run build --prefix client"
-  },
-```
+- In your Heroku dashboard, add a config variable called JWT_SECRET and set it as equal to anything
 
 **Check for understanding: BUT WHY???**
 
@@ -149,6 +120,41 @@ module.exports = bookshelf;
 ```
 
 **Check for understanding: BUT WHY???**
+
+# <<<<<<< HEAD
+
+#### Update scripts in server/package.json
+
+- Update your `server/package.json` scripts with the following:
+
+```json
+  "scripts": {
+    "migrate": "knex migrate:latest",
+    "migrate:down": "knex migrate:down",
+    "migrate:rollback": "knex migrate:rollback",
+    "seed": "knex seed:run",
+    "start": "node index.js",
+    "server": "nodemon index.js"
+  }
+```
+
+**Check for understanding: BUT WHY???**
+
+#### Update scripts in root package.json
+
+```json
+  "scripts": {
+    "client": "npm start --prefix client",
+    "start": "npm start --prefix server",
+    "server": "npm start --prefix server NPM_CONFIG_PREFIX=./server",
+    "dev": "concurrently --kill-others \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm install --prefix server && npm run build --prefix client"
+  },
+```
+
+**Check for understanding: BUT WHY???**
+
+> > > > > > > d739473aba4b633d24536b3b5672f62c608de974
 
 #### Update the React Front-End Client Application
 
