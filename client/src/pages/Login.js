@@ -7,11 +7,21 @@ class Login extends React.Component {
   };
 
   handleChange = (e) => {
-    //grab form data and set it to state
+    this.setState({
+      formData: { ...this.state.formData, [e.target.name]: e.target.value }
+    });
+    console.log(this.state.formData);
   };
 
   handleSubmit = (e) => {
-    // submit it to backend to receive token
+    e.preventDefault();
+    axios
+      .post('http://localhost:8080/api/users/login', this.state.formData)
+      .then((res) => {
+        sessionStorage.setItem('token', res.data.token);
+        this.props.history.push('/');
+      })
+      .catch((error) => alert(error));
   };
 
   render() {
@@ -20,9 +30,9 @@ class Login extends React.Component {
         <h1>Login</h1>
         <form onSubmit={this.handleSubmit}>
           <label>Email</label>
-          <input type="email" name="email" />
+          <input type="email" name="email" onChange={this.handleChange} />
           <label>Password</label>
-          <input type="password" name="password" />
+          <input type="password" name="password" onChange={this.handleChange} />
           <button>Login</button>
         </form>
       </div>
