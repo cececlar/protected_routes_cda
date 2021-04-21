@@ -1,12 +1,5 @@
 ### Deploying to Heroku
 
-#### Set Up Tools
-
-- Verify you have node installed on your computer with `node -v`
-- Visit [heroku.com](https://heroku.com) to log in to your account, or to create one if you did not do so during pre-work
-- In Terminal, verify you have the Heroku CLI installed with `heroku -v`
-- If you do not have the Heroku CLI installed on your computer, download it [here](https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up)
-
 #### Fork and Configure Project
 
 - In Terminal, navigate to your Brainstation directory
@@ -21,7 +14,7 @@
 
 #### Database Configuration
 
-- In the server/knexfile.js, add your database configuration credentials. A sample is shown below.
+- In the server/knexfile.js, ensure your database configuration contains valid values. A sample is shown below.
 
 ```js
 module.exports = {
@@ -45,6 +38,14 @@ module.exports = {
 
 - Now that we have the database created, in the Terminal `cd server`
 - In Terminal, run `knex migrate:latest`
+- In Terminal, run `knex seed:run`
+
+#### Set Up Tools
+
+- Verify you have node installed on your computer with `node -v`
+- Visit [heroku.com](https://heroku.com) to log in to your account, or to create one if you did not do so during pre-work
+- In Terminal, verify you have the Heroku CLI installed with `heroku -v`
+- If you do not have the Heroku CLI installed on your computer, download it [here](https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up)
 
 #### Prepare App for Deployment
 
