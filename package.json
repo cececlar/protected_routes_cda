@@ -1,0 +1,29 @@
+{
+  "name": "protected_routes_cda",
+  "version": "1.0.0",
+  "description": "#### Fork and Configure Project",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "concurrently": "^6.0.2",
+    "nodemon": "^2.0.7"
+  },
+  "scripts": {
+    "client": "npm start --prefix client",
+    "start": "npm start --prefix server",
+    "server": "npm start --prefix server NPM_CONFIG_PREFIX=./server",
+    "dev": "concurrently --kill-others \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm install --prefix server && npm run build --prefix client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cececlar/protected_routes_cda.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cececlar/protected_routes_cda/issues"
+  },
+  "homepage": "https://github.com/cececlar/protected_routes_cda#readme"
+}
