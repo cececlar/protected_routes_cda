@@ -228,5 +228,5 @@ connection.connect((err) => {
 - This is where you can run your migration and seed commands for your Heroku project (so far we have only migrated and seeded locally).
 - From the Heroku terminal, `cd server`
 - `npm run migrate` or `knex migrate:latest` or `npx knex migrate:latest`
-- `npm run seed` or `knex seed:run` or `npx seed:run`
+- `npm run seed` or `knex seed:run` or `npx knex seed:run`
 - If everything goes well, you can open your app using the URL or by going to the app on the Heroku webpage and clicking the 'Open App' button.
